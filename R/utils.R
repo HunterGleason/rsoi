@@ -14,7 +14,9 @@ abbr_month <- function(date){
 check_response <- function(link){
   #browser()
   
-  response <- curl::curl_fetch_memory(link)
+  h <- new_handle()
+  handle_setopt(h, connecttimeout = 60)
+  response <- curl::curl_fetch_memory(link,handle = h)
   
   if(!response$status_code == 200){
     stop(paste0("Non successful http request. Target server returning a ", response$status_code, " error code"),
